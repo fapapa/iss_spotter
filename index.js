@@ -1,1 +1,1 @@
-const { fetchMyIP } = require('./iss.js');
+const { fetchMyIP, fetchCoordsByIP } = require('./iss.js');

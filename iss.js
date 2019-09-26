@@ -26,4 +26,26 @@ const fetchMyIP = (callback) => {
   });
 };
 
-module.exports = { fetchMyIP };
+const fetchCoordsByIP = (ip, callback) => {
+  const API_URL = 'https://ipvigilante.com/';
+  request(API_URL + ip, (err, response, body) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+
+    if (response.statusCode !== 200) {
+      const msg = `Status code ${response.statusCode} when fetching geolocation. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+
+    const parsed = JSON.parse(body);
+    const val = {};
+    val.latitude = parsed.data.latitude;
+    val.longitude = parsed.data.longitude;
+
+    callback(null, val);
+  });
+};
+
